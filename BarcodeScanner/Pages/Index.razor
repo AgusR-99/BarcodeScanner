@@ -1,0 +1,37 @@
+﻿@page "/"
+
+<h3>BarcodeReader</h3>
+<MudContainer>
+<MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="(() => ShowScanBarcode = !ShowScanBarcode)">Escanear</MudButton>
+
+</MudContainer>
+
+<MudTextField @bind-Value="BarCode" Label="Resultado" ReadOnly="true" Variant="Variant.Text" />
+
+@if (ShowScanBarcode)
+{
+
+    <BarcodeReader ScanResult="ScanResult"
+                   Close="(()=>ShowScanBarcode=!ShowScanBarcode)"
+                   ScanBtnTitle="Escanear"
+                   ResetBtnTitle="Resetear"
+                   CloseBtnTitle="Cerrar"
+                   DecodeAllFormats=true
+                   SelectDeviceBtnTitle="Selecciona un dispositivo" />
+
+}
+
+@code{
+    bool ShowScanBarcode { get; set; } = false;
+
+    public string? BarCode { get; set; }
+
+    bool ShowCodes;
+
+    private void ScanResult(string e)
+    {
+        BarCode = e;
+        ShowScanBarcode = !ShowScanBarcode;
+    }
+
+}
